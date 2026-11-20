@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VICE CUT — Cover Studio</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2312081f'/%3E%3Ctext x='16' y='23' font-size='20' font-family='sans-serif' font-weight='bold' fill='%23ffd166' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-title">VICE CUT</div>
+  <div class="masthead-sub">Cover Studio · Painted in Leonida.</div>
+</header>
+
+<main class="studio">
+  <section class="preview">
+    <canvas id="cover" width="900" height="900" aria-label="Cover preview"></canvas>
+    <p id="status" class="status" role="status">Loading samples…</p>
+    <div class="aspect-row" role="group" aria-label="Preview size">
+      <button type="button" class="chip active" data-aspect="square">Square</button>
+      <button type="button" class="chip" data-aspect="portrait">Portrait</button>
+      <button type="button" class="chip" data-aspect="wide">Wide</button>
+    </div>
+  </section>
+
+  <aside class="controls">
+    <section class="panel">
+      <h2>Layout</h2>
+      <div id="layouts" class="chip-row"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Grade</h2>
+      <div id="grades" class="chip-row"></div>
+      <label class="slider-label" for="intensity">Grade intensity
+        <span id="intensity-value">85%</span></label>
+      <input id="intensity" type="range" min="0" max="100" value="85">
+    </section>
+
+    <section class="panel">
+      <h2>Lettering</h2>
+      <div id="styles" class="chip-row"></div>
+      <label class="field-label" for="title-input">Title</label>
+      <input id="title-input" type="text" value="VICE CUT" maxlength="24">
+      <label class="field-label" for="tagline-input">Tagline</label>
+      <input id="tagline-input" type="text" value="Painted in Leonida." maxlength="48">
+      <label class="check-label">
+        <input id="role-toggle" type="checkbox" checked> Show role tags
+      </label>
+    </section>
+
+    <section class="panel">
+      <h2>Selected panel</h2>
+      <label class="field-label" for="caption-input">Caption</label>
+      <input id="caption-input" type="text" value="GOLDEN HOUR" maxlength="24">
+      <label class="field-label" for="role-input">Role tag</label>
+      <input id="role-input" type="text" value="THE DRIVER" maxlength="16">
+      <label class="slider-label" for="zoom">Zoom
+        <span id="zoom-value">100%</span></label>
+      <input id="zoom" type="range" min="100" max="300" value="100">
+      <button id="reset-crop" type="button" class="btn">Reset crop</button>
+    </section>
+
+    <section class="panel">
+      <h2>Photos</h2>
+      <div id="tray" class="tray"></div>
+      <div class="btn-row">
+        <button id="fill-empty" type="button" class="btn">Fill empty panels</button>
+        <button id="fill-one" type="button" class="btn">Fill all from one</button>
+      </div>
+      <p class="hint">Click a panel, then a tray photo, to place it. Drag to pan,
+        scroll to zoom, double-click to re-centre. Your uploads never leave
+        your machine.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Export PNG</h2>
+      <div class="btn-row">
+        <button id="export-square" type="button" class="btn primary">Square 1080×1080</button>
+        <button id="export-portrait" type="button" class="btn primary">Portrait 1080×1350</button>
+        <button id="export-wide" type="button" class="btn primary">Wide 1920×1080</button>
+      </div>
+    </section>
+  </aside>
+</main>
+
+<footer class="colophon">
+  VICE CUT — a photo-led cover studio. Sample photos: Wikimedia Commons
+  (CC BY / CC BY-SA, credited in the README). Fonts: Bebas Neue + Caveat
+  (SIL Open Font License), shipped under app/fonts/.
+</footer>
+
+<script type="module">
+  // Shot mode (?shot=cover or ?shot=editor) drives the real app with query
+  // parameters for the screenshots; otherwise the studio boots.
+  const isShot = new URLSearchParams(location.search).has('shot');
+  if (isShot) {
+    await import('./src/shots.js');
+  } else {
+    await import('./src/main.js');
+  }
+</script>
+</body>
+</html>
