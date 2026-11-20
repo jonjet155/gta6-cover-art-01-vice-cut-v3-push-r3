@@ -59,5 +59,5 @@ const shotCount = readdirSync(join(outDir, 'screenshots')).filter((file) =>
 console.log(
   `VICE CUT handed in: app/ + ${shotCount} screenshot(s) copied to ${outDir}; ` +
     `dossier.json ${statSync(dossierPath).size} bytes, ` +
-    `${dossier.app?.sourceFiles ?? '?'} source files listed`,
+    `${dossier.images?.length ?? 0} images and ${dossier.text?.length ?? 0} text chars listed`,
 );
